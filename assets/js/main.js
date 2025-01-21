@@ -1,22 +1,39 @@
 window.onload = () => {
     const form = document.getElementById('todoForm');
     let todos = [];
+
+    const handleDelete = ({id}) => {
+        console.log("ID to delete:", id);
+        todos = todos.filter(todo  => todo.id !== id);
+        refetch();
+    };
     const refetch = () => {
         // const ul = document.querySelector('ul');
         const ul = document.getElementById('todoList');
        
         ul.innerHTML = '';
         todos.forEach((todo) => {
-            ul.innerHTML += 
-            ` <li>
-                <span> ${todo.name} 5 </span>
-                <button class="btn btn-primary">Update</button>
-                <button class="btn btn-danger">Delete</button>
-            </li>
-            `
+           
+            const li = document.createElement('li');
+            const span = document.createElement('span');
+            span.innerHTML = todo.name;
+            const updateBtn = document.createElement('button');
+            updateBtn.innerText = 'Update';
+            updateBtn.className = 'btn btn-primary';
+            const deleteBtn = document.createElement('button');
+            deleteBtn.innerText = 'Delete';   
+            deleteBtn.className = 'btn btn-danger';
+            deleteBtn.onclick = () => handleDelete(todo);
+            
+            li.appendChild(span);
+            li.appendChild(updateBtn);
+            li.appendChild(deleteBtn);
+
+            ul.appendChild(li);
+            
         });
     }
-    // form.addEventListener('submit', (e) => {});
+
     form.onsubmit = (e) => {
         e.preventDefault();
         const input = form.querySelector('input');
@@ -32,8 +49,6 @@ window.onload = () => {
             todos.push(todo);
             refetch();
         }
-
-
         form.reset();
     }
 }
