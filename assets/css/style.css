@@ -1,0 +1,123 @@
+/* Style global pour le conteneur */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #00bcd4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.container {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 650px;
+    height: 450px;
+    text-align: center;
+}
+
+/* Style du titre */
+h1 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Style du formulaire */
+form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+button {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    color: white;
+}
+
+/* Bouton Add Todo */
+form button {
+    background-color: #007bff;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Liste des Todos */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f9f9f9;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Conteneur des boutons d'action */
+ul li div {
+    display: flex;
+    gap: 10px;
+}
+
+/* Bouton Update */
+ul li button.btn-primary {
+    background-color: #17a2b8;
+}
+
+ul li button.btn-primary:hover {
+    background-color: #138496;
+}
+
+/* Bouton Delete */
+ul li button.btn-danger {
+    background-color: #dc3545;
+}
+
+ul li button.btn-danger:hover {
+    background-color: #c82333;
+}
+
+ul li button.btn-warning {
+    background-color: #ffc107;
+    color: white;
+}
+
+ul li button.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+/* Texte des todos */
+ul li span {
+    flex: 1;
+    text-align: left;
+    font-size: 1rem;
+    color: #333;
+    word-wrap: break-word;
+}
