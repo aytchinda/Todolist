@@ -1,35 +1,20 @@
 window.onload = () => {
     const form = document.getElementById('todoForm');
     const ul = document.getElementById('todoList');
-    let todos = [];
 
-   
+    const saveLocalData = (data) => {
+        if("localStorage" in window) {
+            localStorage.setItem('todos', JSON.stringify(data));
+        }
+    }
+    const getLocalData = () => {
+        if("localStorage" in window) {
+            return JSON.parse(localStorage.getItem('todos') || '[]');
+        }else{
+            return [];
+        }
+    }
 
-    const toggleUpdate = (todo) => {
-            // AUTORISER LA MISE  JOUR
-        const index = todos.findIndex(t => t.id === todo.id);
-        todos[index].isUpdating = !todo.isUpdating;
-        
-      
-        refetch();
-        console.log(todo);
-    };
-    const handleUpdate = (event, todo) => {
-       const name = event.target.value.trim();
-       if(name) {
-        todo.name = name
-        todo.updatedAt = new Date();
-
-        const index = todos.findIndex(t => t.id === todo.id);
-        todos[index] = todo;
-        
-       }
-       
-    };
-    const handleDelete = ({ id }) => {
-        todos = todos.filter(todo => todo.id !== id);    
-        refetch();
-    };
     const refetch = () => {
         ul.innerHTML = '';
         todos.forEach((todo) => {
@@ -70,6 +55,36 @@ window.onload = () => {
             ul.appendChild(li);
         });
     };
+    let todos = getLocalData();
+    refetch();
+    const toggleUpdate = (todo) => {
+            // AUTORISER LA MISE  JOUR
+        const index = todos.findIndex(t => t.id === todo.id);
+        todos[index].isUpdating = !todo.isUpdating;
+        saveLocalData(todos);
+    
+        refetch();
+        console.log(todo);
+    };
+    const handleUpdate = (event, todo) => {
+       const name = event.target.value.trim();
+       if(name) {
+        todo.name = name
+        todo.updatedAt = new Date();
+
+        const index = todos.findIndex(t => t.id === todo.id);
+        todos[index] = todo;
+
+        saveLocalData(todos);
+        
+       }
+       
+    };
+    const handleDelete = ({ id }) => {
+        todos = todos.filter(todo => todo.id !== id);  
+        saveLocalData(todos);  
+        refetch();
+    };
     
     form.onsubmit = (e) => {
         e.preventDefault();
@@ -84,6 +99,7 @@ window.onload = () => {
                 createdAt: new Date(),
             };
             todos.push(todo);
+            saveLocalData(todos);
             refetch();
         }
         form.reset();
