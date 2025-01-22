@@ -5,14 +5,26 @@ window.onload = () => {
 
    
 
-    const handleUpdate = (todo) => {
-        if (!todo.isUpdating) {
-              const index = todos.findIndex(t => t.id === todo.id);
-        todos[index].isUpdating = true;
-        }
+    const toggleUpdate = (todo) => {
+            // AUTORISER LA MISE  JOUR
+        const index = todos.findIndex(t => t.id === todo.id);
+        todos[index].isUpdating = !todo.isUpdating;
+        
       
         refetch();
         console.log(todo);
+    };
+    const handleUpdate = (event, todo) => {
+       const name = event.target.value.trim();
+       if(name) {
+        todo.name = name
+        todo.updatedAt = new Date();
+
+        const index = todos.findIndex(t => t.id === todo.id);
+        todos[index] = todo;
+        
+       }
+       
     };
     const handleDelete = ({ id }) => {
         todos = todos.filter(todo => todo.id !== id);    
@@ -30,9 +42,11 @@ window.onload = () => {
 
             const updateBtn = document.createElement('button');
             if (todo.isUpdating) {
-                // Editing mode
+                // UPDATE
                 const input = document.createElement('input');
                 input.value = todo.name;
+                input.onchange = (event) => handleUpdate (event, todo);
+              
                 updateBtn.innerText = 'Save';
                 updateBtn.className = 'btn btn-warning';
                 updateBtn.onclick = () => {
@@ -49,8 +63,7 @@ window.onload = () => {
                 updateBtn.className = 'btn btn-primary';
                 li.appendChild(span);
             }
-                
-            updateBtn.onclick = () => handleUpdate(todo);
+            updateBtn.onclick = () => toggleUpdate(todo);
             li.appendChild(updateBtn);
             li.appendChild(deleteBtn);
 
